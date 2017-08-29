@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="marvel" lan="pt-br">
+
+<head>
+    <title>JUST</title>
+    <meta charset="UTF-8">
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="js/just.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/just.less">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body ng-controller="quetionaryController">
+    <div class="container">
+        <div ng-repeat="heros in marvel" class="col-sm-12 text-center" style="padding: 50px 300px">
+            <div id="h_{{heros.id}}" class="jumbotron">
+                <img src="{{heros.thumbnail.path}}.{{heros.thumbnail.extension}}" height="200" width="200"><br/>
+                <p>Do you know who is this Hero/villain?</p><br>
+                <label ng-show="userGiveUp[{{$index}}] ? true : false">{{heros.name}}</label>
+
+                <input id="{{heros.id}}" class="form-control" type="text" ng-keyup="$event.keyCode == 13 && submit(heros.id, $index)">
+                <button class="btn btn-success form-control" ng-click="submit(heros.id, $index)">I Know who is it</button>
+                <button class="btn btn-danger form-control" ng-click="giveUp(heros.id, $index)">I Give up, Who is it?</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
