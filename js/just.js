@@ -10,6 +10,9 @@ justapp.controller("quetionaryController", function($scope, $http) {
     $scope.heroName = '';
     $scope.ButtonNext = '';
     $scope.finished = '';
+    $scope.title_marvel = 'Welcome to Marvel Quiz';
+    $scope.text_body_marvel = "let's test your knowledge in the Marvel universe and see how many points you can do, good luck ;-)"
+    $scope.choiceColor = 'dark';
     $scope.userPoints = 0;
     $scope.choice = true;
     var x = 0;
@@ -36,15 +39,24 @@ justapp.controller("quetionaryController", function($scope, $http) {
         });
     }
 
+    function clearName() {
+        document.getElementById('userChoice').value = '';
+    }
+
     $scope.loadHero = function(HeroChoice) {
         if (HeroChoice) {
             x += HeroChoice;
         }
 
+        $scope.choiceColor = 'dark';
+
         if (x >= $scope.marvel.length) {
             $scope.endPoints = false;
-
+            $scope.choiceColor = 'primary';
             $scope.finished = 'block-center'
+
+            $scope.title_marvel = 'Good Job, Hero!'
+            $scope.text_body_marvel = "We hope that you enjoyed our little quiz, if you did a low score, don't be frustrated, try again!"
         } else {
             $scope.heroPic = $scope.marvel[x].thumbnail.path + '.' + $scope.marvel[x].thumbnail.extension;
             $scope.heroName = $scope.marvel[x].name;
@@ -54,8 +66,8 @@ justapp.controller("quetionaryController", function($scope, $http) {
         }
     }
 
-    function clearName() {
-        document.getElementById('userChoice').value = '';
+    $scope.tryAgain = function() {
+        window.location.reload();
     }
 
     $scope.giveUp = function(wa) {
@@ -65,10 +77,13 @@ justapp.controller("quetionaryController", function($scope, $http) {
 
         if (x >= $scope.marvel.length - 1) {
             $scope.ButtonNext = "Come on, let's finish this!"
+            $scope.choiceColor = 'primary';
         } else if (!wa) {
             $scope.ButtonNext = "Ok, Don't worry, you can try the next hero"
+            $scope.choiceColor = 'primary';
         } else if (wa) {
             $scope.ButtonNext = "Oh Nooo, Wrong answer, Let's try the next hero"
+            $scope.choiceColor = 'danger';
         }
     }
 
@@ -88,6 +103,8 @@ justapp.controller("quetionaryController", function($scope, $http) {
             $scope.choice = false;
             //Add the point of correct answer
             $scope.userPoints++;
+            //Change the color of the button
+            $scope.choiceColor = 'success';
             //Show to user, that's the answer is correct
             if (x >= $scope.marvel.length - 1) {
                 $scope.ButtonNext = "Come on, let's finish this!"
