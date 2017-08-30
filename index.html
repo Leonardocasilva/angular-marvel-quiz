@@ -13,15 +13,31 @@
 
 <body ng-controller="quetionaryController">
     <div class="container">
-        <div ng-repeat="heros in marvel" class="col-sm-12 text-center" style="padding: 50px 300px">
-            <div id="h_{{heros.id}}" class="jumbotron">
-                <img src="{{heros.thumbnail.path}}.{{heros.thumbnail.extension}}" height="200" width="200"><br/>
-                <p>Do you know who is this Hero/villain?</p><br>
-                <label ng-show="userGiveUp[{{$index}}] ? true : false">{{heros.name}}</label>
+        <div class="text-center divRpt row">
+            <div id="h_{{heros.id}}" class="col-md-8 col-sm-12 jumbotron border border-danger">
+                <img src="{{heroPic}}" height="200" width="200">
+                <p>Do you know who is this Hero/villain or Team?</p>
+                <label class="nameHero" ng-show="userGiveUp ? true : false">{{heroName}}</label>
+                <div>
+                    <input id="userChoice" class="form-control" ng-show="choice" type="text" ng-keyup="$event.keyCode == 13 && submit()">
+                    <button class="btn btn-success form-control" ng-show="choice" ng-click="submit()">I Know who is it</button>
+                    <button class="btn btn-danger form-control" ng-show="choice" ng-click="giveUp()">I Give up, Who is it?</button>
+                    <button class="btn btn-danger form-control" ng-show="!choice ? true : false" ng-click="loadHero(1)">{{ButtonNext}}</button>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 jumbotron border border-danger">
+                <div>
+                    <h1 class="title_open">Welcome to Marvel Quiz</h1>
+                    <small>let's test your knowledge in the Marvel universe and see how many points you can do, good luck ;-)</small>
+                </div>
+                <div>
+                    <label style="font-size: 20px;">Total points: </label>
+                </div>
+                <div>
 
-                <input id="{{heros.id}}" class="form-control" type="text" ng-keyup="$event.keyCode == 13 && submit(heros.id, $index)">
-                <button class="btn btn-success form-control" ng-click="submit(heros.id, $index)">I Know who is it</button>
-                <button class="btn btn-danger form-control" ng-click="giveUp(heros.id, $index)">I Give up, Who is it?</button>
+                    <label style="font-size: 100px">{{userPoints}}</label><br/>
+                    <small>Remember, The name of all Heroes/Villains/Team are in english.</small>
+                </div>
             </div>
         </div>
     </div>
