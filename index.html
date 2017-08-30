@@ -13,15 +13,31 @@
 
 <body ng-controller="quetionaryController">
     <div class="container">
-        <div ng-repeat="heros in marvel" class="col-sm-12 text-center" style="padding: 50px 300px">
-            <div id="h_{{heros.id}}" class="jumbotron">
-                <img src="{{heros.thumbnail.path}}.{{heros.thumbnail.extension}}" height="200" width="200"><br/>
-                <p>Do you know who is this Hero/villain?</p><br>
-                <label ng-show="userGiveUp[{{$index}}] ? true : false">{{heros.name}}</label>
-
-                <input id="{{heros.id}}" class="form-control" type="text" ng-keyup="$event.keyCode == 13 && submit(heros.id, $index)">
-                <button class="btn btn-success form-control" ng-click="submit(heros.id, $index)">I Know who is it</button>
-                <button class="btn btn-danger form-control" ng-click="giveUp(heros.id, $index)">I Give up, Who is it?</button>
+        <div class="text-center divRpt row">
+            <div ng-show="endPoints" class="col-md-8 col-sm-12 jumbotron border border-{{choiceColor}}">
+                <img src="{{heroPic}}" height="200" width="200">
+                <p>Do you know who is this Hero/villain or Team?</p>
+                <label class="nameHero" ng-show="userGiveUp ? true : false">{{heroName}}</label>
+                <div>
+                    <input id="userChoice" class="form-control" ng-show="choice" type="text" ng-keyup="$event.keyCode == 13 && sendAnswer()">
+                    <button class="first-buttons btn btn-outline-success" ng-show="choice" ng-click="sendAnswer()">I Know who is it</button>
+                    <button class="first-buttons btn btn-outline-primary" ng-show="choice" ng-click="giveUp()">I Give up, Who is it?</button>
+                    <button class="btn btn-outline-{{choiceColor}} " ng-show="!choice ? true : false" ng-click="loadHero(1)">{{ButtonNext}}</button>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 {{finished}} jumbotron border border-{{choiceColor}}">
+                <div>
+                    <h1 class="title_open">{{title_marvel}}</h1>
+                    <small>{{text_body_marvel}}</small>
+                </div>
+                <div>
+                    <label style="font-size: 20px;">Total points: </label>
+                </div>
+                <div>
+                    <label style="font-size: 100px">{{userPoints}}</label><br/>
+                    <small ng-show="endPoints">Remember, The name of all Heroes/Villains/Team are in english.</small>
+                    <button ng-click="tryAgain()" ng-show="endPoints ? false : true" class="btn btn-outline-{{choiceColor}} form-control">Try Again?</button>
+                </div>
             </div>
         </div>
     </div>
