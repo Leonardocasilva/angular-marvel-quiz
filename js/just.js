@@ -5,12 +5,15 @@ var justapp = angular.module('marvel', []);
 justapp.controller("quetionaryController", function($scope, $http) {
     $scope.marvel = [];
     $scope.userGiveUp = false;
+    $scope.endPoints = true;
     $scope.heroPic = '';
     $scope.heroName = '';
     $scope.ButtonNext = '';
+    $scope.finished = '';
     $scope.userPoints = 0;
     $scope.choice = true;
     var x = 0;
+    var count = 0;
     var publicKey = 'c65af5cea0a8039ef261b24a695d602c';
     var baseUrl = "http://gateway.marvel.com/v1/public/characters";
     var timeStamp = '17071991';
@@ -38,11 +41,17 @@ justapp.controller("quetionaryController", function($scope, $http) {
             x += HeroChoice;
         }
 
-        $scope.heroPic = $scope.marvel[x].thumbnail.path + '.' + $scope.marvel[x].thumbnail.extension;
-        $scope.heroName = $scope.marvel[x].name;
+        if (x >= $scope.marvel.length) {
+            $scope.endPoints = false;
 
-        $scope.userGiveUp = false;
-        $scope.choice = true;
+            $scope.finished = 'block-center'
+        } else {
+            $scope.heroPic = $scope.marvel[x].thumbnail.path + '.' + $scope.marvel[x].thumbnail.extension;
+            $scope.heroName = $scope.marvel[x].name;
+
+            $scope.userGiveUp = false;
+            $scope.choice = true;
+        }
     }
 
     function clearName() {
@@ -50,18 +59,20 @@ justapp.controller("quetionaryController", function($scope, $http) {
     }
 
     $scope.giveUp = function(wa) {
-        if (wa) {
-            $scope.ButtonNext = "Oh Nooo, Wrong answer, Let's try the next hero"
-        } else {
-            $scope.ButtonNext = "Ok, Don't worry, you can try the next hero"
-        }
-
         $scope.userGiveUp = true;
         $scope.choice = false;
         $scope.userPoints--;
+
+        if (x >= $scope.marvel.length - 1) {
+            $scope.ButtonNext = "Come on, let's finish this!"
+        } else if (!wa) {
+            $scope.ButtonNext = "Ok, Don't worry, you can try the next hero"
+        } else if (wa) {
+            $scope.ButtonNext = "Oh Nooo, Wrong answer, Let's try the next hero"
+        }
     }
 
-    $scope.submit = function() {
+    $scope.sendAnswer = function() {
         var HerosName = document.getElementById('userChoice').value;
 
         if ($scope.marvel[x].name.indexOf('(') != '-1') {
@@ -71,14 +82,18 @@ justapp.controller("quetionaryController", function($scope, $http) {
         }
 
         if (nomeMarvel.toLowerCase() == HerosName.toLowerCase()) {
-            //Show to user, that's the answer is correct
-            $scope.ButtonNext = 'Nice job, Lets to the next hero';
             //When correct show the name of the hero  
             $scope.userGiveUp = true;
             //Hide the buttons to avoid try insert a new answer on the same hero
             $scope.choice = false;
             //Add the point of correct answer
             $scope.userPoints++;
+            //Show to user, that's the answer is correct
+            if (x >= $scope.marvel.length - 1) {
+                $scope.ButtonNext = "Come on, let's finish this!"
+            } else {
+                $scope.ButtonNext = "Nice job, Let's to the next hero";
+            }
             //Clear the input
             clearName();
         } else {
