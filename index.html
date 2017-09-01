@@ -4,10 +4,8 @@
 <head>
     <title>JUST</title>
     <meta charset="UTF-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.min.js"></script>
-    <script type="text/javascript" src="js/just.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/just.less">
+    <script src="dist/js/just.min.js"></script>
+    <link rel="stylesheet" href="dist/css/just.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -37,6 +35,9 @@
                     <label style="font-size: 100px">{{userPoints}}</label><br/>
                     <small ng-show="endPoints">Remember, The name of all Heroes/Villains/Team are in english.</small>
                     <button ng-click="tryAgain()" ng-show="endPoints ? false : true" class="btn btn-outline-{{choiceColor}} form-control">Try Again?</button>
+                    <a ng-show="mobile" class="btn btn-outline-success form-control" href="whatsapp://send?text=Hi, I play the Marvel Quiz and did {{userPoints}} Points, Why you don't try too?">
+                        <i class="fa fa-whatsapp"></i> Whatsapp
+                    </a>
                 </div>
             </div>
         </div>

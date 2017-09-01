@@ -1,0 +1,54 @@
+body {
+    background: url('../../dist/img/bg-marvel-1.png') no-repeat center fixed;
+    background-size: 1400px 800px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.block-center {
+    float: none;
+    margin: 0px auto;
+}
+
+.divRpt {
+    padding: 50px 0px 0px 0px;
+}
+
+.first-buttons {
+    width: 49%;
+}
+
+.jumbotron {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.nameHero {
+    color: #ffffff;
+    padding: 10px 50px;
+    text-decoration: blink;
+    text-decoration-color: #ff0202;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+label,
+small {
+    color: #ffffff;
+}
+
+.title_open {
+    font-size: 25px;
+}
+
+@media screen and (max-width: 778px) {
+    .divRpt {
+        margin: 50px 0px 0px 0px;
+        padding: 0px;
+    }
+}
