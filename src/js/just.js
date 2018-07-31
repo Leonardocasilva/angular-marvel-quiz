@@ -17,7 +17,7 @@ justapp.controller('quetionaryController', function($scope, $http) {
     $scope.userPoints = 0;
     $scope.choice = true;
     var x = 0;
-    var count = 0;
+    var count = '';
     var nomeMarvel = '';
     var publicKey = 'c65af5cea0a8039ef261b24a695d602c';
     var baseUrl = "https://gateway.marvel.com/v1/public/characters";
@@ -28,13 +28,25 @@ justapp.controller('quetionaryController', function($scope, $http) {
      * Function do get the heros from theMArvel API
      */
     function getHero() {
+
+        for(var i=0; i < 10; i++) {
+            if(i < 9) {
+                count += Math.floor(Math.random() * 1000).toString() + ', ';
+            }else {
+                count += Math.floor(Math.random() * 1000).toString();
+            }
+        }
+
+        console.log(count);
+
         $http.get(baseUrl, {
             params: {
                 ts: timeStamp, // Send the timestanp to acess the API
                 apikey: publicKey, // Send the Public Key to acess the API
                 hash: hash, // Send the hash, that is the Public Key, timestamp and Private Key in a conbination to acess the API
                 limit: 50, // Limit return from the API to 50 characters
-                series: '5, 22, 102, 99, 91, 47, 44, 160, 173' //return the characters based in some series of event
+                series: count //return the characters based in some series of event
+                // '5, 22, 102, 99, 91, 47, 44, 160, 173'
             }
         }).then(function(response) {
             $scope.marvel = response.data.data.results;
